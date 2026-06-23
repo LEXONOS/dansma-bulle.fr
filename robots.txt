@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /pages/politique-de-confidentialite.html
+Disallow: /pages/les-conditions.html
+
+Sitemap: https://dansma-bulle.fr/sitemap.xml

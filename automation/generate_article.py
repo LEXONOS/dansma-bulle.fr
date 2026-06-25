@@ -16,6 +16,10 @@ import blog
 
 MODEL = "claude-sonnet-4-6"          # modèle API (modifiable)
 MAX_TOKENS = 4000
+# Tarifs API en USD par million de tokens (Sonnet 4.6 : 3 / 15).
+# Passe à 1 / 5 si tu utilises Haiku 4.5 (claude-haiku-4-5-20251001), 5x moins cher.
+PRICE_IN = 3.0
+PRICE_OUT = 15.0
 HERE = os.path.dirname(os.path.abspath(__file__))
 TOPICS = os.path.join(HERE, "topics.json")
 
@@ -64,8 +68,21 @@ def call_anthropic(prompt):
         headers={"x-api-key": key, "anthropic-version": "2023-06-01",
                  "content-type": "application/json"})
     with urllib.request.urlopen(req, timeout=120) as r:
-        data = json.loads(r.read())
-    return "".join(b.get("text", "") for b in data.get("content", []))
+        return json.loads(r.read())
+
+def log_cost(keyword, usage):
+    """Enregistre la consommation réelle de tokens et le coût estimé."""
+    tin = usage.get("input_tokens", 0)
+    tout = usage.get("output_tokens", 0)
+    cost = tin / 1e6 * PRICE_IN + tout / 1e6 * PRICE_OUT
+    print(f"Tokens : {tin} entrée + {tout} sortie | Coût estimé : ${cost:.4f}")
+    path = os.path.join(HERE, "cost_log.csv")
+    new = not os.path.exists(path)
+    with open(path, "a", encoding="utf-8") as f:
+        if new:
+            f.write("date,input_tokens,output_tokens,cost_usd,sujet\n")
+        f.write(f'{datetime.date.today().isoformat()},{tin},{tout},{cost:.5f},"{keyword}"\n')
+    return cost
 
 def build_prompt(topic):
     return f"""Tu es rédacteur SEO et GEO expert pour Dans Ma Bulle, une expérience de brunch et dîner dans une bulle transparente, au cœur des vignobles bordelais (à deux ou jusqu'à 6 convives, 2h30, tout compris).
@@ -117,7 +134,11 @@ def main():
     topic = pending[0]
     print(f"Sujet : {topic['keyword']} ({topic['category']})")
 
-    art = extract_json(call_anthropic(build_prompt(topic)))
+    data = call_anthropic(build_prompt(topic))
+    usage = data.get("usage", {})
+    log_cost(topic["keyword"], usage)          # consommation réelle enregistrée
+    text = "".join(b.get("text", "") for b in data.get("content", []))
+    art = extract_json(text)
     ok, failed, words = quality_ok(art)
     print(f"Mots : {words} | Qualité : {'OK' if ok else 'ÉCHEC'}")
     if not ok:

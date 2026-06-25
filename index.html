@@ -8,8 +8,10 @@
   <meta name="description" content="Un brunch ou un dîner dans une bulle transparente, posée au cœur des vignobles bordelais. En amoureux ou entre proches, un moment insolite, intime et fignolé avec amour. Dès 55€ par personne.">
   <meta name="keywords" content="moment insolite Bordeaux, bulle transparente, brunch insolite Bordeaux, dîner romantique vignoble, expérience insolite Médoc, dîner sous les étoiles">
   <meta name="author" content="Dans Ma Bulle">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="theme-color" content="#F3F5F4">
   <link rel="canonical" href="https://dansma-bulle.fr/">
+  <link rel="preload" as="image" href="/assets/images/bulle-nuit-1600.webp" fetchpriority="high">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
@@ -43,20 +45,49 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "@id": "https://dansma-bulle.fr/#business",
-    "name": "Dans Ma Bulle",
-    "description": "Brunch et dîners insolites dans une bulle transparente, au cœur des vignobles bordelais.",
-    "url": "https://dansma-bulle.fr/",
-    "image": "/assets/images/bulle-nuit-1600.webp",
-    "telephone": "+33614838109",
-    "email": "contact@dansma-bulle.fr",
-    "priceRange": "€€",
-    "areaServed": "Bordeaux",
-    "sameAs": ["https://www.instagram.com/dansmabulle.bordeaux/"],
-    "makesOffer": [
-      { "@type": "Offer", "name": "La Romantique", "priceCurrency": "EUR", "price": "180", "description": "Dîner en tête-à-tête dans une bulle transparente, tout compris pour deux." },
-      { "@type": "Offer", "name": "Le Brunch", "priceCurrency": "EUR", "price": "55", "description": "Brunch gourmand dans une bulle transparente, par personne, jusqu'à six convives." }
+    "@graph": [
+      {
+        "@type": ["LocalBusiness", "FoodEstablishment"],
+        "@id": "https://dansma-bulle.fr/#business",
+        "name": "Dans Ma Bulle",
+        "description": "Brunch et dîners insolites dans une bulle transparente, au cœur des vignobles bordelais.",
+        "url": "https://dansma-bulle.fr/",
+        "logo": "https://dansma-bulle.fr/assets/logo.jpg",
+        "image": "https://dansma-bulle.fr/assets/images/bulle-nuit-1600.webp",
+        "telephone": "+33614838109",
+        "email": "contact@dansma-bulle.fr",
+        "priceRange": "€€",
+        "areaServed": { "@type": "City", "name": "Bordeaux" },
+        "address": { "@type": "PostalAddress", "addressLocality": "Bordeaux", "addressRegion": "Nouvelle-Aquitaine", "addressCountry": "FR" },
+        "sameAs": ["https://www.instagram.com/dansmabulle.bordeaux/"],
+        "knowsAbout": ["dîner insolite Bordeaux", "brunch insolite", "demande en mariage", "vignoble bordelais", "dîner romantique"],
+        "makesOffer": [
+          { "@type": "Offer", "name": "Dîner romantique en bulle", "priceCurrency": "EUR", "price": "180", "url": "https://dansma-bulle.fr/experiences/diner-en-bulle.html" },
+          { "@type": "Offer", "name": "Brunch en bulle", "priceCurrency": "EUR", "price": "55", "url": "https://dansma-bulle.fr/experiences/brunch-en-bulle.html" }
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://dansma-bulle.fr/#website",
+        "url": "https://dansma-bulle.fr/",
+        "name": "Dans Ma Bulle",
+        "inLanguage": "fr-FR",
+        "publisher": { "@id": "https://dansma-bulle.fr/#business" }
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Où se déroulent les expériences ?", "acceptedAnswer": { "@type": "Answer", "text": "Au cœur des vignobles bordelais, dans un domaine partenaire. Le lieu exact est communiqué à la réservation." } },
+      { "@type": "Question", "name": "Combien de personnes peut accueillir une bulle ?", "acceptedAnswer": { "@type": "Answer", "text": "De 2 à 6 convives selon la formule : la Romantique pour deux, le Brunch jusqu'à six." } },
+      { "@type": "Question", "name": "Combien de temps dure un moment Dans Ma Bulle ?", "acceptedAnswer": { "@type": "Answer", "text": "2h30, bulle privatisée rien que pour vous." } },
+      { "@type": "Question", "name": "Et s'il fait froid ou s'il pleut ?", "acceptedAnswer": { "@type": "Answer", "text": "La bulle est transparente, fermée et abritée : confortable en toute saison, au sec et au chaud." } },
+      { "@type": "Question", "name": "Le repas est-il compris ?", "acceptedAnswer": { "@type": "Answer", "text": "Oui, le repas est compris dans la formule. Régimes et allergies pris en compte à la réservation." } },
+      { "@type": "Question", "name": "Peut-on offrir l'expérience ?", "acceptedAnswer": { "@type": "Answer", "text": "Oui, une carte cadeau est possible sur l'ensemble des formules." } }
     ]
   }
   </script>

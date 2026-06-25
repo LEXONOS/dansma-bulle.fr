@@ -13,12 +13,13 @@ EMAIL = "contact@dansma-bulle.fr"
 IG = "https://www.instagram.com/dansmabulle.bordeaux/"
 
 # ---------------------------------------------------------------- composants
-def head(title, desc, path, og_image, schemas):
+def head(title, desc, path, og_image, schemas, preload_img=None):
     canonical = SITE + path
     og = SITE + og_image
     sch = "\n  ".join(
         f'<script type="application/ld+json">{json.dumps(s, ensure_ascii=False)}</script>'
         for s in schemas)
+    preload = f'\n  <link rel="preload" as="image" href="{preload_img}" fetchpriority="high">' if preload_img else ""
     return f"""<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -26,8 +27,9 @@ def head(title, desc, path, og_image, schemas):
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
   <meta name="description" content="{desc}">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="theme-color" content="#F3F5F4">
-  <link rel="canonical" href="{canonical}">
+  <link rel="canonical" href="{canonical}">{preload}
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:site_name" content="Dans Ma Bulle">
@@ -209,7 +211,7 @@ def landing_page(path, title, desc, og, h1, eyebrow, intro, facts, hero_img,
                  price_unit, split_img, split_alt, faqs, rel_cards, schemas):
     facts_li = "".join(f"<li>{x}</li>" for x in facts)
     incl_li = "".join(f"<li>{x}</li>" for x in incl)
-    html = head(title, desc, path, og, schemas)
+    html = head(title, desc, path, og, schemas, preload_img=hero_img)
     html += header()
     html += f'''
   <main id="main">

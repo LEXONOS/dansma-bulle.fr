@@ -55,7 +55,13 @@ puis colle-la en haut de `js/main.js` à la place de `VOTRE_CLE_WEB3FORMS`.
 
 Garde-fou qualité : un article n'est publié que s'il respecte la longueur, contient un
 tableau, des liens internes et une FAQ. Sinon le job échoue proprement (rien n'est publié).
-Coût indicatif : ~0,20 à 0,30 € par article.
+
+Coût réel : un seul appel API par article (entrée ~650 tokens, sortie ~2000 tokens),
+soit environ 0,03 à 0,05 € par article sur Sonnet 4.6. À 3 articles/semaine, ~0,50 €/mois.
+La consommation exacte de chaque génération est enregistrée dans `automation/cost_log.csv`.
+Le `max_tokens` du script (4000) est un plafond, pas une facturation : tu ne paies que les
+tokens réellement produits. Pour diviser encore le coût par 5, passe le modèle à
+Haiku 4.5 dans `generate_article.py` (qualité un peu en dessous).
 
 ### Ajouter / modifier des sujets
 Édite `automation/topics.json` (liste de mots-clés + catégorie). Les sujets non utilisés

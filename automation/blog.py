@@ -27,9 +27,10 @@ STATIC_PAGES = [
     ("/blog/", "0.8", "weekly"),
 ]
 
-def _head(title, desc, path, og_image, schemas):
+def _head(title, desc, path, og_image, schemas, preload_img=None):
     canonical = SITE + path; og = SITE + og_image
     sch = "\n  ".join(f'<script type="application/ld+json">{json.dumps(s, ensure_ascii=False)}</script>' for s in schemas)
+    preload = f'\n  <link rel="preload" as="image" href="{preload_img}" fetchpriority="high">' if preload_img else ""
     return f"""<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -37,8 +38,9 @@ def _head(title, desc, path, og_image, schemas):
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
   <meta name="description" content="{desc}">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="theme-color" content="#F3F5F4">
-  <link rel="canonical" href="{canonical}">
+  <link rel="canonical" href="{canonical}">{preload}
   <meta property="og:type" content="article">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:site_name" content="Dans Ma Bulle">
@@ -179,7 +181,7 @@ def render_article_page(meta, body_html):
                         "mainEntity": [{"@type": "Question", "name": q,
                                         "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in meta["faqs"]]})
 
-    html = _head(meta["title"], meta["description"], path, img, schemas)
+    html = _head(meta["title"], meta["description"], path, img, schemas, preload_img=img)
     html += _header()
     html += f"""
   <main id="main">
@@ -219,7 +221,7 @@ def build_index(posts):
                 "url": SITE + "/blog/", "description": "Idées de sorties insolites, romantiques et gourmandes autour de Bordeaux."}]
     html = _head("Le Journal — idées de sorties insolites autour de Bordeaux | Dans Ma Bulle",
                  "Idées de dîners romantiques, brunchs originaux et sorties insolites autour de Bordeaux et dans le vignoble. Le journal de Dans Ma Bulle.",
-                 "/blog/", "/assets/images/dome-jour-1600.webp", schemas)
+                 "/blog/", "/assets/images/dome-jour-1600.webp", schemas, preload_img="/assets/images/dome-jour-1600.webp")
     html += _header()
     html += f"""
   <main id="main">

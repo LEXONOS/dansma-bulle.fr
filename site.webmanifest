@@ -1,0 +1,14 @@
+{
+  "name": "Dans Ma Bulle",
+  "short_name": "Dans Ma Bulle",
+  "description": "Brunch et dîners insolites dans une bulle transparente, au cœur des vignobles bordelais.",
+  "lang": "fr",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F3F5F4",
+  "theme_color": "#F3F5F4",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" },
+    { "src": "/assets/logo.jpg", "sizes": "600x600", "type": "image/jpeg", "purpose": "any" }
+  ]
+}

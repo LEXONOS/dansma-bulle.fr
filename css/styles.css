@@ -398,6 +398,9 @@ body.menu-open .drawer__scrim { opacity: 1; visibility: visible; }
 .footer__bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding-top: 1.8rem; font-size: .85rem; color: #8AA09B; }
 .footer__top-link { transition: color .25s var(--ease); }
 .footer__top-link:hover { color: #fff; }
+.footer__pro { display: inline-flex; align-items: center; gap: .4rem; color: #6E8783; transition: color .25s var(--ease); }
+.footer__pro:hover { color: var(--turquoise); }
+.footer__pro svg { opacity: .85; flex-shrink: 0; }
 
 /* ============================================================
    RESPONSIVE
